@@ -1,0 +1,138 @@
+sources:
+  lever: []
+
+  ashby:
+    - company: OpenAI
+      board: openai
+
+    - company: Runpod
+      board: runpod
+
+    - company: MeridianLink
+      board: meridianlink
+
+    - company: Vanta
+      board: vanta
+
+    - company: Outmarket AI
+      board: outmarket
+
+    - company: FutureFit AI
+      board: futurefitai
+
+    - company: OpenRouter
+      board: openrouter
+
+    - company: G2i
+      board: g2i
+search:
+  require_remote: true
+  minimum_score: 5
+  max_jobs_per_run: 20
+
+  categories:
+
+    project_management:
+      label: "Project / Program Management"
+      title_terms:
+        - project manager
+        - program manager
+        - technical project manager
+        - technical program manager
+        - delivery manager
+        - scrum master
+        - project coordinator
+        - associate project coordinator
+        - associate project manager
+
+    data:
+      label: "Data & Analytics"
+      title_terms:
+        - data analyst
+        - business intelligence
+        - bi analyst
+        - analytics engineer
+        - data engineer
+        - data analyst intern
+        - data manager
+
+    ai:
+      label: "AI / ML"
+      title_terms:
+        - ai specialist
+        - machine learning
+        - llm
+        - prompt engineer
+        - evaluation
+        - ai evaluator
+
+    qa:
+      label: "QA / Testing / Evaluation"
+      title_terms:
+        - qa engineer
+        - quality assurance
+        - software tester
+        - test engineer
+        - ai tester
+
+    writing:
+      label: "Technical Writing / Content"
+      title_terms:
+        - technical writer
+        - content strategist
+        - documentation
+        - content writer
+        - copywriter
+        - editor
+        - content editor
+        - SEO writer
+
+    operations:
+      label: "Operations / Implementation"
+      title_terms:
+        - product operations
+        - operations manager
+        - implementation manager
+        - delivery lead
+
+  excluded_title_terms:
+    - director of sales
+    - account executive
+    - customer success manager
+    - physician
+    - nurse
+    - attorney
+
+  allowed_location_terms:
+    - us
+    - u.s.
+    - usa
+    - united states
+    - remote us
+    - remote u.s.
+    - remote - usa
+    - north america
+
+  weights:
+    "artificial intelligence": 4
+    " ai ": 4
+    "llm": 4
+    "agent": 3
+    "evaluation": 5
+    "evaluator": 5
+    "project manager": 5
+    "program manager": 5
+    "technical project": 5
+    "technical program": 5
+    "data analyst": 4
+    "analytics": 3
+    "python": 3
+    "sql": 2
+    "responsible ai": 5
+    "governance": 4
+    "technical writer": 4
+    "quality assurance": 3
+    " qa ": 3
+    "product operations": 3
+    "ai operations": 4
+    "prompt engineer": 3
