@@ -25,6 +25,15 @@ sources:
 
     - company: G2i
       board: g2i
+  greenhouse:
+    - company: DataHub
+      board: acryldata
+    - company: Innodata
+      board: innodatainc
+    - company: Neo4j
+      board: neo4j
+    - company: Grafana Labs
+      board: grafanalabs
 search:
   require_remote: true
   minimum_score: 5

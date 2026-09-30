@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 
 from src.models import Job
 
@@ -68,7 +69,7 @@ def location_is_allowed(
 
     if allowed:
         return any(
-            term in location
+            re.search(rf"(?<!\w){re.escape(term)}(?!\w)", location)
             for term in allowed
         )
 

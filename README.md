@@ -1,11 +1,12 @@
 # Discord Job Intelligence
 
-A free-first Python job-monitoring pipeline that collects public job postings from Lever and Ashby, filters and scores them, deduplicates previously posted roles, and sends a daily digest to Discord through a webhook.
+A free-first Python job-monitoring pipeline that collects public job postings from Lever, Ashby, and Greenhouse, filters and scores them, deduplicates previously posted roles, and sends a daily digest to Discord through a webhook.
 
 ## MVP
 
 - Lever public postings
 - Ashby public postings
+- Greenhouse public postings
 - Remote-role filtering
 - Keyword-weighted scoring
 - Cross-run deduplication
@@ -36,6 +37,10 @@ For Ashby, add the board name from:
 
 `https://jobs.ashbyhq.com/CompanyName`
 
+For Greenhouse, add the board token from:
+
+`https://job-boards.greenhouse.io/companytoken`
+
 Example:
 
 ```yaml
@@ -46,9 +51,12 @@ sources:
   ashby:
     - company: Example AI
       board: ExampleAI
+  greenhouse:
+    - company: Example Data
+      board: exampledata
 ```
 
-Delete the sample entries until you replace them with real companies.
+The default configuration includes verified boards for DataHub, Innodata, Neo4j, and Grafana Labs. Add or remove boards in the same format; the remote and location filters still apply to every source.
 
 ## 3. Local setup
 
@@ -107,7 +115,7 @@ pytest
 
 ## Next milestones
 
-1. Add Greenhouse.
+1. Expand the Greenhouse board list.
 2. Add richer location parsing.
 3. Add salary normalization.
 4. Add description-based scoring.

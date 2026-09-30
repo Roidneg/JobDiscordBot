@@ -6,6 +6,7 @@ from pathlib import Path
 import yaml
 
 from src.collectors.ashby import collect_ashby
+from src.collectors.greenhouse import collect_greenhouse
 from src.collectors.lever import collect_lever
 from src.discord_client import post_jobs
 from src.scoring import ScoredJob, score_job
@@ -37,6 +38,12 @@ def collect_all(config: dict):
             jobs.extend(collect_ashby(source["company"], source["board"]))
         except Exception as exc:
             print(f"[WARN] Ashby collection failed for {source}: {exc}")
+
+    for source in sources.get("greenhouse") or []:
+        try:
+            jobs.extend(collect_greenhouse(source["company"], source["board"]))
+        except Exception as exc:
+            print(f"[WARN] Greenhouse collection failed for {source}: {exc}")
 
     # Deduplicate within this run by canonical job_id.
     return list({job.job_id: job for job in jobs}.values())
