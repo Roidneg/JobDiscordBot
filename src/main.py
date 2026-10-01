@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 
 import yaml
 
 from src.collectors.ashby import collect_ashby
 from src.collectors.greenhouse import collect_greenhouse
+from src.collectors.himalayas import collect_himalayas
 from src.collectors.lever import collect_lever
 from src.discord_client import post_jobs
 from src.scoring import ScoredJob, score_job
@@ -16,6 +18,13 @@ from src.state import load_seen, save_seen
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "search.yaml"
 STATE_PATH = ROOT / "data" / "seen_jobs.json"
+
+
+def _match_key(job) -> str:
+    # Keep a source-independent key so a later feed cannot repost the same role.
+    company = re.sub(r"[^a-z0-9]+", "", job.company.casefold())
+    title = re.sub(r"[^a-z0-9]+", "", job.title.casefold())
+    return f"match:{company}:{title}"
 
 
 def load_config() -> dict:
@@ -45,6 +54,20 @@ def collect_all(config: dict):
         except Exception as exc:
             print(f"[WARN] Greenhouse collection failed for {source}: {exc}")
 
+    himalayas = sources.get("himalayas") or {}
+    if himalayas.get("queries"):
+        try:
+            direct_roles = {_match_key(job) for job in jobs}
+            for job in collect_himalayas(
+                himalayas["queries"],
+                max_pages=int(himalayas.get("max_pages", 2)),
+                max_age_days=int(himalayas.get("max_age_days", 14)),
+            ):
+                if _match_key(job) not in direct_roles:
+                    jobs.append(job)
+        except Exception as exc:
+            print(f"[WARN] Himalayas collection failed: {exc}")
+
     # Deduplicate within this run by canonical job_id.
     return list({job.job_id: job for job in jobs}.values())
 
@@ -54,7 +77,7 @@ def rank_new_jobs(jobs, config: dict, seen: set[str]) -> list[ScoredJob]:
     ranked = []
 
     for job in jobs:
-        if job.job_id in seen:
+        if job.job_id in seen or _match_key(job) in seen:
             continue
         result = score_job(job, search_config)
         if result:
@@ -115,7 +138,9 @@ def main() -> None:
         category_labels,
     )
 
-    seen.update(item.job.job_id for item in ranked)
+    for item in ranked:
+        seen.add(item.job.job_id)
+        seen.add(_match_key(item.job))
     save_seen(STATE_PATH, seen)
     print(f"Posted {len(ranked)} new jobs to Discord.")
 

@@ -1,12 +1,13 @@
 # Discord Job Intelligence
 
-A free-first Python job-monitoring pipeline that collects public job postings from Lever, Ashby, and Greenhouse, filters and scores them, deduplicates previously posted roles, and sends a daily digest to Discord through a webhook.
+A free-first Python job-monitoring pipeline that collects public job postings from Lever, Ashby, Greenhouse, and Himalayas, filters and scores them, deduplicates previously posted roles, and sends a daily digest to Discord through a webhook.
 
 ## MVP
 
 - Lever public postings
 - Ashby public postings
 - Greenhouse public postings
+- Himalayas remote-jobs API
 - Remote-role filtering
 - Keyword-weighted scoring
 - Cross-run deduplication
@@ -41,6 +42,8 @@ For Greenhouse, add the board token from:
 
 `https://job-boards.greenhouse.io/companytoken`
 
+Himalayas searches are configured under `sources.himalayas`. The default searches cover the job categories in this project. `max_pages` limits API requests per search; `max_age_days` prevents older listings from filling the first digest. Results must allow U.S. applicants and pass the same title, remote, and score filters as other sources. Himalayas asks that reused listings link back to its job page and name Himalayas as the source; the Discord embed does both.
+
 Example:
 
 ```yaml
@@ -54,9 +57,15 @@ sources:
   greenhouse:
     - company: Example Data
       board: exampledata
+  himalayas:
+    queries:
+      - project manager
+      - data analyst
+    max_pages: 2
+    max_age_days: 14
 ```
 
-The default configuration includes verified boards for DataHub, Innodata, Neo4j, and Grafana Labs. Add or remove boards in the same format; the remote and location filters still apply to every source.
+The default configuration includes verified boards for DataHub, Innodata, Neo4j, and Grafana Labs. Add or remove boards in the same format; the remote and location filters still apply to every source. Himalayas data refreshes daily and its API may return HTTP 429 when rate limited; reduce searches or pages if that happens.
 
 ## 3. Local setup
 
@@ -110,12 +119,12 @@ Edit `config/search.yaml` to change title terms, scoring weights, excluded locat
 ## Run tests
 
 ```bash
-pytest
+python -m pytest -q
 ```
 
 ## Next milestones
 
-1. Expand the Greenhouse board list.
+1. Expand the company board list.
 2. Add richer location parsing.
 3. Add salary normalization.
 4. Add description-based scoring.

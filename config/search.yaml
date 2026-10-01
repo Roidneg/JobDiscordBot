@@ -34,6 +34,19 @@ sources:
       board: neo4j
     - company: Grafana Labs
       board: grafanalabs
+  himalayas:
+    queries:
+      - project manager
+      - program manager
+      - data analyst
+      - data engineer
+      - ai evaluator
+      - quality assurance
+      - technical writer
+      - operations manager
+      - content strategist
+    max_pages: 2
+    max_age_days: 14
 search:
   require_remote: true
   minimum_score: 5
