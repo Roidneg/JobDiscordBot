@@ -54,7 +54,7 @@ sources:
 search:
   require_remote: true
   minimum_score: 5
-  max_jobs_per_run: 20
+  max_jobs_per_run: 40
 
   categories:
 
