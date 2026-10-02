@@ -45,6 +45,10 @@ sources:
       - technical writer
       - operations manager
       - content strategist
+      - ux designer
+      - ui designer
+      - environment artist
+      - art director
     max_pages: 2
     max_age_days: 14
 search:
@@ -109,6 +113,18 @@ search:
         - content editor
         - SEO writer
 
+    design_art:
+      label: "UX / UI Design & Art"
+      title_terms:
+        - ux/ui designer
+        - ui/ux designer
+        - ux designer
+        - ui designer
+        - user experience designer
+        - user interface designer
+        - environment artist
+        - art director
+
     operations:
       label: "Operations / Implementation"
       title_terms:
@@ -158,3 +174,9 @@ search:
     "product operations": 3
     "ai operations": 4
     "prompt engineer": 3
+    "ux designer": 5
+    "ui designer": 5
+    "user experience designer": 5
+    "user interface designer": 5
+    "environment artist": 5
+    "art director": 5
