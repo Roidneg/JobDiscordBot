@@ -49,6 +49,10 @@ sources:
       - ui designer
       - environment artist
       - art director
+      - ai artist
+      - generative ai artist
+      - ai illustrator
+      - generative ai designer
     max_pages: 2
     max_age_days: 14
 search:
@@ -124,6 +128,16 @@ search:
         - user interface designer
         - environment artist
         - art director
+        - ai artist
+        - gen ai artist
+        - genai artist
+        - generative ai artist
+        - generative artist
+        - ai visual artist
+        - ai concept artist
+        - ai illustrator
+        - ai graphic designer
+        - generative ai designer
 
     operations:
       label: "Operations / Implementation"
@@ -180,3 +194,13 @@ search:
     "user interface designer": 5
     "environment artist": 5
     "art director": 5
+    "ai artist": 5
+    "gen ai artist": 5
+    "genai artist": 5
+    "generative ai artist": 5
+    "generative artist": 5
+    "ai visual artist": 5
+    "ai concept artist": 5
+    "ai illustrator": 5
+    "ai graphic designer": 5
+    "generative ai designer": 5
