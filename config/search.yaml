@@ -28,6 +28,13 @@ sources:
 
     - company: G2i
       board: g2i
+
+    - company: Advanced Systems Group
+      board: advanced-systems-group
+
+    - company: Hightouch
+      board: hightouch-inc
+
   greenhouse:
     - company: DataHub
       board: acryldata
@@ -141,6 +148,10 @@ search:
         - ai illustrator
         - ai graphic designer
         - generative ai designer
+        - brand designer
+        - product designer
+        - creative designer
+        - ai creative solutions designer
 
     operations:
       label: "Operations / Implementation"
@@ -211,3 +222,7 @@ search:
     "content writer": 5
     "content editor": 5
     "seo writer": 5
+    "brand designer": 5
+    "product designer": 5
+    "creative designer": 5
+    "ai creative solutions designer": 5
