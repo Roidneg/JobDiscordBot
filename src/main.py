@@ -13,7 +13,7 @@ from src.collectors.lever import collect_lever
 from src.discord_client import post_jobs
 from src.scoring import ScoredJob, score_job
 from src.state import load_seen, save_seen
-from collections import deque
+from collections import Counter, deque
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "search.yaml"
@@ -162,6 +162,29 @@ def main() -> None:
     jobs = collect_all(config)
     seen = load_seen(STATE_PATH)
     ranked = rank_new_jobs(jobs, config, seen)
+
+    print("\n[SUMMARY] Jobs collected by source:")
+    if jobs:
+        for source, count in sorted(Counter(job.source for job in jobs).items()):
+            print(f"  {source}: {count}")
+    else:
+        print("  No jobs collected.")
+
+    new_jobs = [
+        job for job in jobs
+        if job.job_id not in seen and _match_key(job) not in seen
+    ]
+
+    eligible_jobs = [
+        job for job in new_jobs
+        if score_job(job, config.get("search") or {}) is not None
+    ]
+
+    print(f"[SUMMARY] Already seen: {len(jobs) - len(new_jobs)}")
+    print(f"[SUMMARY] New jobs filtered out: {len(new_jobs) - len(eligible_jobs)}")
+    print(f"[SUMMARY] Eligible jobs: {len(eligible_jobs)}")
+    print(f"[SUMMARY] Jobs selected for digest: {len(ranked)}")
+    print(f"[SUMMARY] Eligible jobs not selected: {len(eligible_jobs) - len(ranked)}")
 
     webhook_url = os.getenv("DISCORD_WEBHOOK_URL", "").strip()
     if not webhook_url:
