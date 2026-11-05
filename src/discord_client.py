@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import requests
 
-from src.scoring import ScoredJob
+from src.scoring import ScoredJob, get_remote_warnings
 
 
 def _truncate(value: str, limit: int) -> str:
@@ -52,6 +52,20 @@ def _embed(
             "inline": True,
         },
     ]
+
+    warnings = get_remote_warnings(job)
+
+    if warnings:
+        fields.append(
+            {
+                "name": "Remote status: review",
+                "value": (
+                        "The description contains possible in-office "
+                        "language: " + ", ".join(warnings)
+                ),
+                "inline": False,
+            }
+        )
 
     if job.compensation:
         fields.append(

@@ -41,6 +41,27 @@ def is_remote(job: Job) -> bool:
         for term in remote_terms
     )
 
+def get_remote_warnings(job: Job) -> list[str]:
+    """Find possible in-office requirements in a job description."""
+    description = job.description.lower()
+
+    warning_phrases = (
+        "hybrid schedule",
+        "hybrid role",
+        "onsite required",
+        "on-site required",
+        "in-office required",
+        "days in the office",
+        "days per week in the office",
+        "must work in the office",
+    )
+
+    return [
+        phrase
+        for phrase in warning_phrases
+        if phrase in description
+    ]
+
 
 def title_is_relevant(job: Job, config: dict) -> bool:
     title = job.title.lower()
