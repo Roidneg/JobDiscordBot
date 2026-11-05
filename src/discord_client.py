@@ -67,6 +67,24 @@ def _embed(
             }
         )
 
+    employment_type = (
+        job.metadata.get("employment_type")
+        or job.metadata.get("commitment")
+        or ""
+    )
+
+    if employment_type:
+        fields.append(
+            {
+                "name": "Employment type",
+                "value": _truncate(
+                    str(employment_type).replace("_", " ").strip().title(),
+                    1024,
+                ),
+                "inline": True,
+            }
+        )
+
     if job.compensation:
         fields.append(
             {
