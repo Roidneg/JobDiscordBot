@@ -1,4 +1,7 @@
 sources:
+  remotive:
+    enabled: true
+
   lever: []
 
   ashby:
@@ -204,3 +207,7 @@ search:
     "ai illustrator": 5
     "ai graphic designer": 5
     "generative ai designer": 5
+    "copywriter": 5
+    "content writer": 5
+    "content editor": 5
+    "seo writer": 5
