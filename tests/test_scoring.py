@@ -1,3 +1,6 @@
+import pytest
+
+from src.main import load_config
 from src.models import Job
 from src.scoring import score_job
 
@@ -91,3 +94,72 @@ def test_excluded_location_is_filtered():
         description="Python and evaluation.",
     )
     assert score_job(job, CONFIG) is None
+
+
+@pytest.mark.parametrize("title", [
+    "AI Operations Specialist",
+    "AI Data Operations Manager",
+    "Operations Lead, Artificial Intelligence",
+    "AI/ML Ops Lead",
+    "Data Annotator",
+    "Annotation Quality Analyst",
+    "Data Labelling Team Lead",
+    "LLM Trainer",
+    "AI Training Data Specialist",
+    "AI Lead",
+    "Lead AI Engineer",
+    "AI Engineering Lead",
+    "Head of Generative AI",
+])
+def test_ai_operations_titles_qualify_without_description_keywords(title):
+    config = load_config()["search"]
+    job = Job(
+        job_id="1",
+        title=title,
+        company="Example",
+        location="Remote - United States",
+        url="https://example.com/1",
+        source="test",
+    )
+
+    result = score_job(job, config)
+
+    assert result is not None
+    assert "ai_operations" in result.categories
+    assert result.score >= config["minimum_score"]
+
+
+@pytest.mark.parametrize("title", [
+    "AI Lead Generation Specialist",
+    "AIOps Specialist",
+    "OpenAI Lead Generation Specialist",
+    "Sales Coordinator",
+])
+def test_ai_operations_category_requires_a_relevant_title(title):
+    config = load_config()["search"]
+    job = Job(
+        job_id="1",
+        title=title,
+        company="Example",
+        location="Remote - United States",
+        url="https://example.com/1",
+        source="test",
+        description="Support AI operations, LLM evaluation, and data annotation teams.",
+    )
+
+    assert score_job(job, config) is None
+
+
+@pytest.mark.parametrize("location", ["United States", "Remote - Canada"])
+def test_ai_operations_titles_still_require_an_eligible_remote_location(location):
+    config = load_config()["search"]
+    job = Job(
+        job_id="1",
+        title="AI Operations Lead",
+        company="Example",
+        location=location,
+        url="https://example.com/1",
+        source="test",
+    )
+
+    assert score_job(job, config) is None

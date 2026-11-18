@@ -113,16 +113,17 @@ def get_matching_categories(
 ) -> list[str]:
 
     title = job.title.lower()
+    normalized_title = re.sub(r"[\W_]+", " ", title).strip()
     matches = []
 
     categories = config.get("categories") or {}
 
     for category_name, category_config in categories.items():
         terms = category_config.get("title_terms") or []
+        patterns = category_config.get("title_patterns") or []
 
-        if any(
-            str(term).lower() in title
-            for term in terms
+        if any(str(term).lower() in title for term in terms) or any(
+            re.search(pattern, normalized_title) for pattern in patterns
         ):
             matches.append(category_name)
 
@@ -158,6 +159,14 @@ def score_job(job: Job, config: dict) -> ScoredJob | None:
             clean = phrase_l.strip()
             if clean and clean not in reasons:
                 reasons.append(clean)
+
+    title_score_floor = max(
+        int(config["categories"][name].get("title_score_floor", score))
+        for name in categories
+    )
+    if title_score_floor > score:
+        score = title_score_floor
+        reasons.insert(0, "matching title")
 
     if score < int(config.get("minimum_score", 0)):
         return None

@@ -51,6 +51,11 @@ sources:
       - data analyst
       - data engineer
       - ai evaluator
+      - ai operations
+      - annotator
+      - ai trainer
+      - ai lead
+      - lead ai engineer
       - quality assurance
       - technical writer
       - operations manager
@@ -105,6 +110,21 @@ search:
         - prompt engineer
         - evaluation
         - ai evaluator
+
+    ai_operations:
+      label: "AI Operations / Annotation / Leadership"
+      title_score_floor: 5
+      title_patterns:
+        # Operations titles in either word order.
+        - '\b(?:ai(?: ml)?|(?:gen ?|generative )ai|artificial intelligence|llm) (?:data |quality |product |training |evaluation )?(?:operations|ops)\b'
+        - '\b(?:operations|ops) (?:lead|manager|analyst|specialist|associate|coordinator|director) (?:for )?(?:ai(?: ml)?|(?:gen ?|generative )ai|artificial intelligence|llm)\b'
+        # Annotation, labeling, and model-training roles.
+        - '\b(?:annotators?|(?:ai|data|image|video|text|audio|lidar) annotation|data labell?(?:ers?|ing))\b'
+        - '\bannotation (?:team |quality |operations )?(?:lead|manager|specialist|analyst|reviewer|coordinator|supervisor|qa|assurance)\b'
+        - '\b(?:ai|llm) (?:trainers?|training data)\b'
+        # AI leadership, including titles that start with Lead or Head of.
+        - '\b(?:ai(?: ml)?|(?:gen ?|generative )ai|artificial intelligence|llm|machine learning) (?:(?:adoption|data|delivery|enablement|engineering|evaluation|product|program|project|quality|research|strategy|team|technical|training) )?lead\b(?! gen(?:eration)?\b)'
+        - '\b(?:lead (?:applied |technical )?|head of )(?:ai(?: ml)?|(?:gen ?|generative )ai|artificial intelligence|llm|machine learning)\b(?! powered\b)'
 
     qa:
       label: "QA / Testing / Evaluation"
