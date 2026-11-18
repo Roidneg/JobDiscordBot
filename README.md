@@ -112,9 +112,11 @@ The default profile targets roles around:
 - data analytics
 - responsible AI / governance
 - AI technical writing
-- product / AI operations
+- product operations and AI operations
+- AI data annotation, labeling, and model training
+- AI team leads, AI engineering leads, and Head of AI roles
 
-Edit `config/search.yaml` to change title terms, scoring weights, excluded locations, or the score threshold.
+Edit `config/search.yaml` to tune title matching, scoring weights, location filters, or the score threshold. The AI operations category uses `title_patterns` to match common title variations and `title_score_floor` so a matching title can qualify even when the description is sparse. The remote and location filters apply as usual.
 
 ## Run tests
 
